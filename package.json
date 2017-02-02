@@ -1,0 +1,11 @@
+{
+  "name": "calmcomments",
+  "version": "0.1.0",
+  "description": "A Project to learn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark Williams",
+  "license": "ISC"
+}
