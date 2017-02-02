@@ -1,0 +1,6 @@
+webpack
+build
+node_modules
+*.log
+public
+docs
