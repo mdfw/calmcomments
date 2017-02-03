@@ -1,5 +1,5 @@
 import { encryptPassword, passwordsMatch } from './passwordEncryption';
-import { appraisePassword } from '../../shared/helpers/appraise';
+import { appraisePassword, appraiseEmail, appraiseDisplayName } from '../../shared/helpers/appraise';
 
 module.exports = (sequelize, DataTypes) => {
   const Account = sequelize.define('Account', {
@@ -7,18 +7,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        len: [1, 50],
+        isValidDisplayName: function validateDisplayName(value) {
+          const appraisalMessages = appraiseDisplayName(value);
+          if (appraisalMessages.length > 0) {
+            throw new Error(appraisalMessages.join(' '));
+          }
+        },
       },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: true,
-        notEmpty: true,
-        len: [1, 50],
+        isValidEmail: function validateEmail(value) {
+          const appraisalMessages = appraiseEmail(value);
+          if (appraisalMessages.length > 0) {
+            throw new Error(appraisalMessages.join(' '));
+          }
+        },
       },
+      unique: true,
     },
     encryptedPasswordHash: {
       type: DataTypes.STRING,
@@ -49,22 +57,19 @@ module.exports = (sequelize, DataTypes) => {
             return encryptPassword(passwordValue);
           })
           .then((encryptedValue) => {
-            console.log('Got encrypted value: ');
-            console.dir(encryptedValue);
             self.encryptedPasswordHash = encryptedValue.encrypted;
             self.encryptedPasswordPepperId = encryptedValue.pepperId;
           })
           .catch((err) => {
             throw err;
           });
-        },
-        toJSON: function () {
-          var values = Object.assign({}, this.get());
-          delete values.encryptedPasswordHash;
-          return values;
-        }
- 
-      }
+      },
+      toJSON: function stripValues() {
+        const values = Object.assign({}, this.get());
+        delete values.encryptedPasswordHash;
+        return values;
+      },
+    },
   });
   return Account;
 };

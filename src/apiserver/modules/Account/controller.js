@@ -51,6 +51,9 @@ const addAccountEndpoint = (req, res) => {
       });
     })
     .catch((err) => {
+      console.log('Error on account create');
+      console.dir(err);
+      // TODO: this only works on mongoose. Have to dig into the err object to see where to pick up.
       if (err.code === 11000) {
         res.statusMessage = 'Account with that email already exists'; // eslint-disable-line no-param-reassign
         res.status(409).end();
@@ -58,10 +61,11 @@ const addAccountEndpoint = (req, res) => {
       }
       let errorMessage = 'Account could not be created.';
       if (err.message) {
-        errorMessage = err.message;
+        errorMessage = err.message.replace(/(\r\n|\n|\r)/gm, ' ');
       }
       res.statusMessage = errorMessage; // eslint-disable-line no-param-reassign
-      res.status(422).end();
+      // TODO: Return errors better. The err object has an errors array that could be parsed.
+      res.status(422).send(JSON.stringify({ errors: err.message }));
     });
 };
 

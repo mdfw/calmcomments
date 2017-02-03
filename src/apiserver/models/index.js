@@ -37,12 +37,12 @@ const db = {};
 
 sequelize
   .authenticate()
-  .then(function(err) {
+  .then(() => {
     console.log('Connection has been established successfully.');
-  }, function (err) { 
+  }, function trapError(err) {
     console.log('Unable to connect to the database:', err);
   });
-  
+
 const accountModel = Account(sequelize, Sequelize);
 db[accountModel.name] = accountModel;
 
@@ -53,13 +53,13 @@ Object.keys(db).forEach(function associateThem(modelName) {
 });
 
 sequelize
-  .sync({ force: true })
-  .then(function(err) {
-    console.log('It worked!');
-  }, function (err) { 
+  .sync() //   .sync({ force: true })
+  .then(() => {
+    console.log('Synced models to database.');
+  }, function trapSyncError(err) {
     console.log('An error occurred while creating the table:', err);
   });
-  
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
