@@ -81,8 +81,8 @@ const getAccountInfoEndpoint = (req, res) => { // eslint-disable-line consistent
   if (!accountId) {
     return res.status(422).json({ success: false, message: 'No accountId provided' });
   }
-  Account.findOneAccount(accountId, false)
-    .then((item) => {
+  Account.find(accountId)
+    .success((item) => {
       const cleanedItem = item.toJSON();
       res.status(201).json({
         success: true,

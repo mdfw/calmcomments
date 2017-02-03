@@ -8,6 +8,7 @@ function signinUser(req, res, next) {
     if (err || !user) {
       res.statusMessage = 'Could not log in with that email and password combination.'; // eslint-disable-line no-param-reassign
       res.status(422).end();
+      return;
     }
     req.logIn(user, (error) => { // eslint-disable-line consistent-return
       if (error) {

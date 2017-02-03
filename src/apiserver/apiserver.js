@@ -4,9 +4,9 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
-// import passport from 'passport';
+import passport from 'passport';
 /* Routes */
-import { accountRoutes } from './modules';
+import { accountRoutes, authenticationRoutes } from './modules';
 
 /* Configurations */
 import '../config/environment';
@@ -36,12 +36,12 @@ app.use(session({
   saveUninitialized: false,
   store: new RedisStore({ client: redisClient }),
 }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(morgan('combined'));
 
 /* Routes */
-app.use('/api/v1', [accountRoutes]);
+app.use('/api/v1', [accountRoutes, authenticationRoutes]);
 
 app.get('/', function baseReturn(req, res) {
   res.send('Hello - this is the api server. You probably want a more interesting endpoint.');

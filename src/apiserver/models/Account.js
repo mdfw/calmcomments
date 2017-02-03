@@ -67,7 +67,15 @@ module.exports = (sequelize, DataTypes) => {
       toJSON: function stripValues() {
         const values = Object.assign({}, this.get());
         delete values.encryptedPasswordHash;
+        delete values.encryptedPasswordPepperId;
         return values;
+      },
+      comparePassword(candidate) {
+        return passwordsMatch(
+          candidate,
+          this.encryptedPasswordHash,
+          this.encryptedPasswordPepperId,
+        );
       },
     },
   });
