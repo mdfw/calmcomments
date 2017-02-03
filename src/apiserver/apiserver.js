@@ -4,15 +4,16 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
-import passport from 'passport';
+// import passport from 'passport';
 /* Routes */
-// import { accountRoutes, recipientRoutes, authenticationRoutes, postRoutes } from './modules';
+import { accountRoutes } from './modules';
+
 /* Configurations */
 import '../config/environment';
-import sequelize from '../config/postgresConnect';
 import redisClient from '../config/redisConnect';
 
 const RedisStore = require('connect-redis')(session);
+
 
 let port = process.env.API_SERVER_PORT;
 if (!port) {
@@ -35,12 +36,12 @@ app.use(session({
   saveUninitialized: false,
   store: new RedisStore({ client: redisClient }),
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(morgan('combined'));
 
 /* Routes */
-// app.use('/api/v1', [accountRoutes, recipientRoutes, authenticationRoutes, postRoutes]);
+app.use('/api/v1', [accountRoutes]);
 
 app.get('/', function baseReturn(req, res) {
   res.send('Hello - this is the api server. You probably want a more interesting endpoint.');
@@ -54,7 +55,6 @@ process.on('SIGTERM', () => {
 app.on('close', () => {
   console.log('Closing redis.');
   redisClient.quit();
-  sequelize.close();
 });
 
 /* Start the API Server */
