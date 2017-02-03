@@ -38,9 +38,9 @@ const db = {};
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('Success: Connection to Postgres established .');
   }, function trapError(err) {
-    console.log('Unable to connect to the database:', err);
+    console.log('FAILURE: Unable to connect to the Postgres database:', err);
   });
 
 const accountModel = Account(sequelize, Sequelize);
@@ -55,9 +55,9 @@ Object.keys(db).forEach(function associateThem(modelName) {
 sequelize
   .sync() //   .sync({ force: true })
   .then(() => {
-    console.log('Synced models to database.');
+    console.log('Success: Synced models to database.');
   }, function trapSyncError(err) {
-    console.log('An error occurred while creating the table:', err);
+    console.log('FAILURE: An error occurred while creating the table:', err);
   });
 
 db.sequelize = sequelize;

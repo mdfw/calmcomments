@@ -52,7 +52,7 @@ passport.serializeUser(function serializeAccount(account, callback) {
 });
 
 passport.deserializeUser(function deserializeAccount(accountId, callback) {
-  Account.find(accountId)
+  Account.findById(accountId)
   .then(function determineAction(theAccount) {
     return callback(null, theAccount);
   })

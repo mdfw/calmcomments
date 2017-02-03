@@ -17,8 +17,8 @@ const activeAccountId = function getAccount(req) {
       return onBehalfOfId;
     }
   }
-  if (req.user && req.user.accountId) {
-    return req.user.accountId;
+  if (req.user && req.user.id) {
+    return req.user.id;
   }
   return null;
 };
@@ -41,8 +41,6 @@ const addAccountEndpoint = (req, res) => {
       return newAccount.save();
     })
     .then((createdAccount) => {
-      console.log('createdAccount');
-      console.dir(createdAccount);
       const cleanedAccount = createdAccount.toJSON();
       res.status(201).json({
         success: true,
@@ -51,8 +49,6 @@ const addAccountEndpoint = (req, res) => {
       });
     })
     .catch((err) => {
-      console.log('Error on account create');
-      console.dir(err);
       // TODO: this only works on mongoose. Have to dig into the err object to see where to pick up.
       if (err.code === 11000) {
         res.statusMessage = 'Account with that email already exists'; // eslint-disable-line no-param-reassign
@@ -81,8 +77,8 @@ const getAccountInfoEndpoint = (req, res) => { // eslint-disable-line consistent
   if (!accountId) {
     return res.status(422).json({ success: false, message: 'No accountId provided' });
   }
-  Account.find(accountId)
-    .success((item) => {
+  Account.findById(accountId)
+    .then((item) => {
       const cleanedItem = item.toJSON();
       res.status(201).json({
         success: true,
