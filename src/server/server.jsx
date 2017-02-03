@@ -2,7 +2,6 @@
 import http from 'http';
 import httpProxy from 'http-proxy';
 import express from 'express';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import favicon from 'serve-favicon';
 

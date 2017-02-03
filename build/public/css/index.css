@@ -1,0 +1,26 @@
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+
+body
+{
+	background-color: White;
+	/* For testing only*/
+	font-family: 'Source Code Pro', monospace;
+	/* other option: font-family: 'Source Sans Pro', sans-serif; */
+	font-size: 18px;
+	/*letter-spacing: 0.03em;*/
+}
+
+div
+{
+	/*border: 1px solid Chocolate;*/
+	/* For testing only */
+}
+
+.content
+{
+	max-width: 970px;
+	margin: 0 auto;
+}
+
+
