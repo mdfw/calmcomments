@@ -5,6 +5,8 @@ import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
 import passport from 'passport';
+import TTimer from './modules/Timer';
+
 /* Routes */
 import { accountRoutes, authenticationRoutes } from './modules';
 
@@ -21,6 +23,19 @@ if (!port) {
 }
 
 const app = express();
+
+const triggerTime = function triggerTime() {
+  // console.log('Time triggered');
+};
+
+const tickTime = function tickTime(now, later) {
+ /* const nowDate = new Date(now);
+  const laterDate = new Date(later);
+  console.log(`now: ${nowDate.toString()} later: ${laterDate.toString()}`);
+  */
+};
+
+const ttimer = new TTimer(20, triggerTime, tickTime);
 
 /* Middleware setup */
 app.use((err, req, res, next) => {
