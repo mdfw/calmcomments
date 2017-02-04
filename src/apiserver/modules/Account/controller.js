@@ -41,6 +41,9 @@ const addAccountEndpoint = (req, res) => {
       return newAccount.save();
     })
     .then((createdAccount) => {
+      req.login(createdAccount, function loginFailed(error) {
+        console.log(`Failed login after creation: ${error}`);
+      });
       const cleanedAccount = createdAccount.toJSON();
       res.status(201).json({
         success: true,

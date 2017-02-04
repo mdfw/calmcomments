@@ -8,7 +8,7 @@ import passport from 'passport';
 import TTimer from './modules/Timer';
 
 /* Routes */
-import { accountRoutes, authenticationRoutes } from './modules';
+import { accountRoutes, authenticationRoutes, postRoutes } from './modules';
 
 /* Configurations */
 import '../config/environment';
@@ -56,7 +56,7 @@ app.use(passport.session());
 app.use(morgan('combined'));
 
 /* Routes */
-app.use('/api/v1', [accountRoutes, authenticationRoutes]);
+app.use('/api/v1', [accountRoutes, authenticationRoutes, postRoutes]);
 
 app.get('/', function baseReturn(req, res) {
   res.send('Hello - this is the api server. You probably want a more interesting endpoint.');
