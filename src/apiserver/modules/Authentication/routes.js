@@ -14,7 +14,7 @@ function signinUser(req, res, next) {
       if (error) {
         return next(error);
       }
-      res.cookie('snssl', 'y', { httpOnly: false });
+      res.cookie('ccsl', 'y', { httpOnly: false });
 
       // you can send a json response instead of redirecting the user
       res.status(201).json({
@@ -33,7 +33,7 @@ routes.route('/sessions')
   .delete(function logThemOut(req, res) {
     req.session.destroy();
     req.logout();
-    res.clearCookie('snssl');
+    res.clearCookie('ccsl');
     res.status(204).end();
   });
 
