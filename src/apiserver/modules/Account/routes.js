@@ -4,9 +4,9 @@ import { ensureLoggedIn } from '../Authentication';
 
 const routes = new Router();
 
-routes.route('/account')
+routes.route('/accounts')
   .post(addAccountEndpoint);
 
-routes.get('/account', ensureLoggedIn(), getAccountInfoEndpoint);
+routes.get('/accounts', ensureLoggedIn(), getAccountInfoEndpoint);
 
 export default routes;
