@@ -49,7 +49,7 @@ const getPostsEndpoint = (req, res) => { // eslint-disable-line consistent-retur
       model: Account,
       attributes: ['displayName'],
     }],
-    attributes: ['message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
+    attributes: ['id', 'message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
     limit: 30,
     order: [
       ['createdAt', 'DESC'],
@@ -85,7 +85,7 @@ const getSinglePostEndpoint = (req, res) => { // eslint-disable-line consistent-
         model: Account,
         attributes: ['displayName'],
       }],
-      attributes: ['message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
+      attributes: ['id', 'message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
     })
     .then((item) => {
       if (!item) {
@@ -104,21 +104,25 @@ const getSinglePostEndpoint = (req, res) => { // eslint-disable-line consistent-
 
 /* Get all posts.
  */
-const getPostsSinceDate = (dateStamp) => { // eslint-disable-line consistent-return
+const getPostsSinceDate = (sinceDateStamp) => { // eslint-disable-line consistent-return
   const ttimer = new TTimer();
   const lastTime = ttimer.lastTimestamp;
   Post.findAll({
     where: {
       createdAt: {
         $lt: new Date(lastTime),
-        $gt: new Date(dateStamp),
+        $gt: new Date(sinceDateStamp),
+      },
+      updatedAt: {
+        $lt: new Date(lastTime),
+        $gt: new Date(sinceDateStamp),
       },
     },
     include: [{
       model: Account,
       attributes: ['displayName'],
     }],
-    attributes: ['message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
+    attributes: ['id', 'message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
     limit: 30,
     order: [
       ['createdAt', 'DESC'],
