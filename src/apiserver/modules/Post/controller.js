@@ -8,7 +8,7 @@ const Account = models.Account;
 /* Builds the where clause for the posts search.
  * If there is a user account, looks for all of their posts.
  * If not, just filters by date
- * TODO: Add some filtering by date/number
+ * TODO: Add some filtering by date/number for pagination
  */
 const buildGetPostWhere = (userAccountId) => {
   const ttimer = new TTimer();
@@ -33,7 +33,7 @@ const buildGetPostWhere = (userAccountId) => {
   });
 };
 
-/* Get all posts.
+/* Get all posts. Filters by the release date.
  */
 const getPostsEndpoint = (req, res) => { // eslint-disable-line consistent-return
   let accountId = null;
@@ -72,6 +72,8 @@ const getPostsEndpoint = (req, res) => { // eslint-disable-line consistent-retur
 
 /* Get a post by id.
  *  @param {number} postId in params
+ *  TODO Does not filter by date or id. This is a hole that someone could exploit to get
+ *    non-released posts.
  */
 const getSinglePostEndpoint = (req, res) => { // eslint-disable-line consistent-return
   const itemId = req.params.postId;
@@ -102,7 +104,7 @@ const getSinglePostEndpoint = (req, res) => { // eslint-disable-line consistent-
     });
 };
 
-/* Get all posts.
+/* Get all posts since the datestamp provided. Also gets any posts updated in the time slot.
  */
 const getPostsSinceDate = (sinceDateStamp) => { // eslint-disable-line consistent-return
   const ttimer = new TTimer();
@@ -236,11 +238,8 @@ const updatePostEndpoint = (req, res) => {
 
 /* Removes a post (marks the status to 'removed')
  * Params needed in req.body:
- *   @param (number=} onBehalfOfId - (optional) The accountId to act on behalf of if current account
- *      can act on behalf of it.
  *  @param (number) postId - Will be pulled from req.params or req.body (body takes priority)
  *  @param {number} accountId - Will be pulled from req.user.
- *  Uses activeAccountId() to get the accountId to search for.
  */
 const removePostEndpoint = (req, res) => {
   const accountId = req.user.id;
