@@ -25,7 +25,7 @@ if (!port) {
 const app = express();
 
 const triggerTime = function triggerTime() {
-  // console.log('Time triggered');
+  console.log('Time triggered');
 };
 
 const tickTime = function tickTime(now, later) {
@@ -35,7 +35,7 @@ const tickTime = function tickTime(now, later) {
   */
 };
 
-const ttimer = new TTimer(20, triggerTime, tickTime);
+const ttimer = new TTimer(5, triggerTime, tickTime);
 
 /* Middleware setup */
 app.use((err, req, res, next) => {

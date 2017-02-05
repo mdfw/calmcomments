@@ -1,21 +1,92 @@
+import TTimer from '../Timer';
+
 const models = require('../../models');
 
 const Post = models.Post;
+const Account = models.Account;
+
+/* Builds the where clause for the posts search.
+ * If there is a user account, looks for all of their posts.
+ * If not, just filters by date
+ * TODO: Add some filtering by date/number
+ */
+const buildGetPostWhere = (userAccountId) => {
+  const ttimer = new TTimer();
+
+  const lastTime = ttimer.lastTimestamp;
+  if (userAccountId) {
+    return ({
+      $or: [
+        { AccountId: userAccountId },
+        {
+          createdAt: {
+            $lt: new Date(lastTime),
+          },
+        },
+      ],
+    });
+  }
+  return ({
+    createdAt: {
+      $lt: new Date(lastTime),
+    },
+  });
+};
+
+/* Get all posts.
+ */
+const getPostsEndpoint = (req, res) => { // eslint-disable-line consistent-return
+  let accountId = null;
+  if (req.user) {
+    accountId = req.user.id;
+  }
+  const whereClause = buildGetPostWhere(accountId);
+  console.log('Where clause');
+  console.dir(whereClause);
+  Post.findAll({
+    where: whereClause,
+    include: [{
+      model: Account,
+      attributes: ['displayName'],
+    }],
+    attributes: ['message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
+    limit: 30,
+    order: [
+      ['createdAt', 'DESC'],
+    ],
+  })
+  .then((items) => {
+    if (!items) {
+      throw new Error('Post not found');
+    }
+    res.status(200).json({
+      success: true,
+      posts: items,
+    });
+  })
+  .catch((err) => {
+    res.statusMessage = err.message; // eslint-disable-line no-param-reassign
+    res.status(404).end();
+  });
+};
 
 /* Get a post by id.
- * Params needed in req.body:
- *  @param {number} postId req.body.postId OR
  *  @param {number} postId in params
  */
-const getPostEndpoint = (req, res) => { // eslint-disable-line consistent-return
-  let itemId = req.params.postId;
-  if (req.body.postId) {
-    itemId = req.body.postId;
-  }
+const getSinglePostEndpoint = (req, res) => { // eslint-disable-line consistent-return
+  const itemId = req.params.postId;
   if (!itemId) {
     res.status(422).json({ success: false, messages: 'No PostId provided.' });
   }
-  Post.findById(itemId)
+  Post.find(
+    {
+      where: { id: itemId },
+      include: [{
+        model: Account,
+        attributes: ['displayName'],
+      }],
+      attributes: ['message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
+    })
     .then((item) => {
       if (!item) {
         throw new Error('Post not found');
@@ -30,6 +101,40 @@ const getPostEndpoint = (req, res) => { // eslint-disable-line consistent-return
       res.status(404).end();
     });
 };
+
+/* Get all posts.
+ */
+const getPostsSinceDate = (dateStamp) => { // eslint-disable-line consistent-return
+  const ttimer = new TTimer();
+  const lastTime = ttimer.lastTimestamp;
+  Post.findAll({
+    where: {
+      createdAt: {
+        $lt: new Date(lastTime),
+        $gt: new Date(dateStamp),
+      },
+    },
+    include: [{
+      model: Account,
+      attributes: ['displayName'],
+    }],
+    attributes: ['message', 'edited', 'createdAt', 'updatedAt', 'AccountId'],
+    limit: 30,
+    order: [
+      ['createdAt', 'DESC'],
+    ],
+  })
+  .then((items) => {
+    if (!items) {
+      throw new Error('Post not found');
+    }
+    return items;
+  })
+  .catch((err) => { // eslint-disable-line arrow-body-style
+    return err;
+  });
+};
+
 
 /* Adds a post to the Post database based on the fields passed in.
  * Params needed in req.body:
@@ -47,7 +152,7 @@ const addPostEndpoint = (req, res) => {
   }
   const newPost = Post.build({
     message: req.body.message,
-    accountID: accountId,
+    AccountId: accountId,
   });
   newPost.save()
     .then((createdItem) => {
@@ -170,9 +275,10 @@ const removePostEndpoint = (req, res) => {
   });
 };
 
-
 export {
-  getPostEndpoint,
+  getPostsEndpoint,
+  getSinglePostEndpoint,
+  getPostsSinceDate,
   addPostEndpoint,
   updatePostEndpoint,
   removePostEndpoint,

@@ -5,8 +5,6 @@ import redisClient from '../../../config/redisConnect';
  * Really, this should be set on the database? At least have separate timers per 'room'.
  * But since we don't have rooms, we don't need that.
  */
-
-
 let instance = null;
 
 class TrancheTimer {

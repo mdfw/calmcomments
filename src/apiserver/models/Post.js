@@ -9,19 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       edited: {
         type: DataTypes.BOOLEAN,
       },
-      accountID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
     },
     {
       timestamps: true,
       paranoid: true,
-    },
-    {
       classMethods: {
         associate: function associateModels(models) {
-          Post.belongsTo(models.Account, { foreignKey: 'accountId' });
+          Post.belongsTo(models.Account);
         },
       },
     },

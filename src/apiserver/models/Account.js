@@ -70,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
           const values = Object.assign({}, this.get());
           delete values.encryptedPasswordHash;
           delete values.encryptedPasswordPepperId;
+          delete values.deletedAt;
           return values;
         },
         // TODO: We really need a profile table but this works for now.
@@ -78,6 +79,7 @@ module.exports = (sequelize, DataTypes) => {
           delete values.encryptedPasswordHash;
           delete values.encryptedPasswordPepperId;
           delete values.email;
+          delete values.deletedAt;
           return values;
         },
         comparePassword(candidate) {
@@ -88,11 +90,9 @@ module.exports = (sequelize, DataTypes) => {
           );
         },
       },
-    },
-    {
       classMethods: {
         associate: function associatModesl(models) {
-          Account.hasMany(models.Post, { foreignKey: 'accountId' });
+          Account.hasMany(models.Post);
         },
       },
     },

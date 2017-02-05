@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
-  getPostEndpoint,
+  getPostsEndpoint,
+  getSinglePostEndpoint,
   addPostEndpoint,
   updatePostEndpoint,
   removePostEndpoint,
@@ -8,10 +9,17 @@ import {
 import { ensureLoggedIn } from '../Authentication';
 
 const routes = new Router();
-routes.get('/posts/:postId', getPostEndpoint);
+// Get a specific post
+routes.get('/posts/:postId', getSinglePostEndpoint);
+// Get all posts
+routes.get('/posts', getPostsEndpoint);
+// Add a post
 routes.post('/posts', ensureLoggedIn(), addPostEndpoint);
+// Update a post with the id in the url
 routes.put('/posts/:postId', ensureLoggedIn(), updatePostEndpoint);
+// Update a post with the postId in the body
 routes.put('/posts/', ensureLoggedIn(), updatePostEndpoint);
+// Delete a post
 routes.delete('/posts/:postId', ensureLoggedIn(), removePostEndpoint);
 
 export default routes;
