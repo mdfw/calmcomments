@@ -5,10 +5,10 @@ import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
 import passport from 'passport';
+import SocketIO from 'socket.io';
 import TTimer from './modules/Timer';
-
 /* Routes */
-import { accountRoutes, authenticationRoutes, postRoutes } from './modules';
+import { accountRoutes, authenticationRoutes, postRoutes, PostController } from './modules';
 
 /* Configurations */
 import '../config/environment';
@@ -16,26 +16,29 @@ import redisClient from '../config/redisConnect';
 
 const RedisStore = require('connect-redis')(session);
 
-
+/* Main server setup */
 let port = process.env.API_SERVER_PORT;
 if (!port) {
   port = 3009;
 }
 
 const app = express();
+const server = Server(app);
+const io = new SocketIO(server);
 
-const triggerTime = function triggerTime() {
+/* Timer setup */
+const triggerTime = function triggerTime(lastTimeStamp) {
+  const newMessages = PostController.getPostsSinceDate(lastTimeStamp);
+  console.log(`Emitting messages: ${newMessages.length}`);
+  io.emit('messages', newMessages);
   console.log('Time triggered');
 };
 
 const tickTime = function tickTime(now, later) {
- /* const nowDate = new Date(now);
-  const laterDate = new Date(later);
-  console.log(`now: ${nowDate.toString()} later: ${laterDate.toString()}`);
-  */
+  io.emit('tick', now, later);
 };
 
-const ttimer = new TTimer(5, triggerTime, tickTime);
+const ttimer = new TTimer(5, triggerTime, tickTime); // eslint-disable-line no-unused-vars
 
 /* Middleware setup */
 app.use((err, req, res, next) => {
@@ -44,19 +47,33 @@ app.use((err, req, res, next) => {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
+const sessionMiddleware = session({
   name: 'ccs',
   secret: 'MmyWTLNNsTi15L8n3iUH8kls',
   resave: true,
   saveUninitialized: false,
   store: new RedisStore({ client: redisClient }),
-}));
+});
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('combined'));
 
-/* Routes */
+/* socket setup */
+io.use(function ioSessionSetup(socket, next) {
+  // Wrap the express middleware
+  sessionMiddleware(socket.request, {}, next);
+});
+
+/* API Routes */
 app.use('/api/v1', [accountRoutes, authenticationRoutes, postRoutes]);
+
+/* Socket options */
+io.on('connection', function onConnect(socket) {
+  const userId = socket.request.session.passport.user;
+  console.log('Your User ID is', userId);
+});
+
 
 app.get('/', function baseReturn(req, res) {
   res.send('Hello - this is the api server. You probably want a more interesting endpoint.');
@@ -73,7 +90,7 @@ app.on('close', () => {
 });
 
 /* Start the API Server */
-const server = Server(app);
+
 server.listen(port, function reportOnListen(error) {
   if (error) {
     console.log(`API Server ERROR on startup: ${error}`);

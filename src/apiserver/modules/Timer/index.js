@@ -38,8 +38,8 @@ class TrancheTimer {
     const triggerTimestamp = this.lastTimestamp + boost;
     const nowTimestamp = Date.now();
     if (triggerTimestamp < nowTimestamp) {
+      this.ringCallback(this.lastTimestamp);
       this.setLastTimeToNow();
-      this.ringCallback();
     }
     this.tickTockCallback(nowTimestamp, triggerTimestamp);
   }
