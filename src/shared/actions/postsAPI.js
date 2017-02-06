@@ -17,7 +17,7 @@ import { formUpdate, formClear, CREATE_POST_FORM_NAME } from './forms';
 function checkAPIReturn(response) {
   console.log('PostsAPI:checkAPIReturn');
   console.dir(response);
-  if (response.status === 201 || response.status === 200) {
+  if (response.status === 201 || response.status === 200 || response.status === 204) {
     return response;
   }
   const error = new Error(response.statusText);
@@ -78,7 +78,7 @@ function dispatchNewPostFormClear(dispatch) {
  *   and calls the fetch.
  * TODO: probably better to just insert into the posts array instead of calling back.
  */
-const addPostAPI = function addPostAPI(message, subject) {
+const addPostAPI = function addPostAPI(message) {
   return function fetchAddPostDispatch(dispatch) {
     if (!message || message.length === 0) {
       throw new Error('Missing message for post.');
@@ -95,7 +95,6 @@ const addPostAPI = function addPostAPI(message, subject) {
       credentials: 'same-origin',
       body: JSON.stringify({
         message: message,
-        subject: subject,
       }),
     })
     .then(checkAPIReturn)
@@ -118,4 +117,100 @@ const addPostAPI = function addPostAPI(message, subject) {
   };
 };
 
-export { fetchPostsAPI, addPostAPI };
+// ------ //
+// UPDATING //
+// ------ //
+
+
+/* Clears the new account data from the store
+  */
+function dispatchEditPostFormClear(dispatch, formName) {
+  return dispatch(
+    formClear(formName),
+  );
+}
+/* The heavy lifting work of adding a post.
+ * @param {string} message
+ * @param {string=} subject
+ * Calls to the api endpoint to create a post. If successful, clears form,
+ *   and calls the fetch.
+ * TODO: probably better to just insert into the posts array instead of calling back.
+ */
+const updatePostAPI = function updatePostAPI(message, postId, formName) {
+  return function fetchUpdatePostDispatch(dispatch) {
+    if (!message || message.length === 0) {
+      throw new Error('Missing message for post.');
+    }
+    // Set the submitting flag
+    dispatch(formUpdate(formName, {
+      submitting: true,
+    }));
+    fetch(`/api/v1/posts/${postId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        message: message,
+      }),
+    })
+    .then(checkAPIReturn)
+    .then(function processJsonResponse(response) {
+      return response.json();
+    })
+    .then(dispatchEditPostFormClear(dispatch, formName))
+    .then(function getUpdatedPosts() {
+      return dispatch(
+        fetchPosts(),
+      );
+    })
+    .catch(function submitError(error) {
+      const errMsg = error.message;
+      return dispatch(formUpdate(formName, {
+        submitting: false,
+        submitError: errMsg,
+      }));
+    });
+  };
+};
+
+// ------ //
+// UPDATING //
+// ------ //
+
+
+/* The heavy lifting work of deletign a post.
+ * @param {number} postId
+ * Calls to the api endpoint to delete a post. If successful, clears form,
+ *   and calls the fetch.
+ */
+const deletePostAPI = function updatePostAPI(postId) {
+  return function fetchDeletePostDispatch(dispatch) {
+    if (!postId || postId.length === 0) {
+      throw new Error('Missing postId for post.');
+    }
+    fetch(`/api/v1/posts/${postId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+    })
+    .then(checkAPIReturn)
+    .then(function getUpdatedPosts() {
+      return dispatch(
+        fetchPosts(),
+      );
+    })
+    .catch(function submitError(error) {
+      const errMsg = error.message;
+      return dispatch(formUpdate(formName, {
+        submitting: false,
+        submitError: errMsg,
+      }));
+    });
+  };
+};
+
+export { fetchPostsAPI, addPostAPI, updatePostAPI };

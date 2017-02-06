@@ -50,7 +50,7 @@ function emptyStateForForm(formId) {
     case CREATE_POST_FORM_NAME:
       return JSON.parse(JSON.stringify(DEFAULT_CREATE_POST_FORM));
     default:
-      return {};
+      return null;
   }
 }
 
@@ -80,7 +80,11 @@ const formReducer = function regFormReducer(state = DEFAULT_FORM_STATE, action) 
     case FORM_CLEAR: {
       const formId = action.formId;
       const emptyState = emptyStateForForm(formId);
-      newstate[formId] = emptyState;
+      if (!emptyState) {
+        delete newstate[formId];
+      } else {
+        newstate[formId] = emptyState;
+      }
       break;
     }
     default:

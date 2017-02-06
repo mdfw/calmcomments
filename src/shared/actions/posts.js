@@ -1,4 +1,4 @@
-import { fetchPostsAPI, addPostAPI } from './postsAPI';
+import { fetchPostsAPI, addPostAPI, updatePostAPI } from './postsAPI';
 
 
 const RECEIVE_POSTS = 'RECEIVE_POSTS';
@@ -29,10 +29,26 @@ function fetchPosts() {
   };
 }
 
-
-function submitNewPost(message, subject) {
+function submitNewPost(message) {
   return (dispatch) => {
-    dispatch(addPostAPI(message, subject));
+    dispatch(addPostAPI(message));
+  };
+}
+
+function submitEditPost(message, postId) {
+  return (dispatch) => {
+    dispatch(updatePostAPI(message, postId));
+  };
+}
+
+const DELETE_POST = 'DELETE_POST';
+function deletePost(postId) {
+  return (dispatch) => {
+    dispatch(updatePostAPI(message, postId));
+    dispatch({
+      type: DELETE_POST,
+      postId: postId,
+    })
   };
 }
 
@@ -45,4 +61,7 @@ export {
   receivePostsError,
   fetchPosts,
   submitNewPost,
+  submitEditPost,
+  DELETE_POST,
+  deletePost,
 };
