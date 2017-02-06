@@ -21,9 +21,9 @@ function processNewPosts(existingPosts, newPosts) {
       return false;
     });
     if (ind === -1) {
-      updatedPosts[ind] = newPost;
-    } else {
       updatedPosts.push(newPost);
+    } else {
+      updatedPosts[ind] = newPost;
     }
   });
   return updatedPosts;
