@@ -4,8 +4,7 @@ import { receivePosts } from '../actions/posts';
 
 const socketConnection = function socketConnection(dispatch) {
   const socket = io();
-  console.log('socket connection');
-  console.dir(socket);
+
   socket.on('connect_failed', () => {
     socket.close();
   });
@@ -15,9 +14,20 @@ const socketConnection = function socketConnection(dispatch) {
   });
 
   socket.on('messages', (messages) => {
-    console.log('messages');
+    console.log('socket: messages');
     console.dir(messages);
+    dispatch(
+      receivePosts(messages),
+    );
   });
+
+  socket.on('listeners', (listeners) => {
+    console.log('socket: listeners');
+    dispatch(
+      receiveListeners(listeners),
+    );
+  });
+
 
   socket.on('tick', (now, later) => {
     dispatch(
