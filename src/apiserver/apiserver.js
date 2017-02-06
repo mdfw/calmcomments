@@ -29,8 +29,10 @@ const io = new SocketIO(server);
 /* Timer setup */
 const triggerTime = function triggerTime(lastTimeStamp) {
   const newMessages = PostController.getPostsSinceDate(lastTimeStamp);
-  console.log(`Emitting messages: ${newMessages.length}`);
-  io.emit('messages', newMessages);
+  if (newMessages) {
+    console.log(`Emitting messages: ${newMessages.length}`);
+    io.emit('messages', newMessages);
+  }
   console.log('Time triggered');
 };
 
@@ -67,6 +69,12 @@ io.use(function ioSessionSetup(socket, next) {
 
 /* API Routes */
 app.use('/api/v1', [accountRoutes, authenticationRoutes, postRoutes]);
+
+const findAndEmitListeners = function findAndEmitListeners () {
+  const allSockets = io.sockets;
+  console.log('allSockets');
+  console.dir(allSockets);
+}
 
 /* Socket options */
 io.on('connection', function onConnect(socket) {
