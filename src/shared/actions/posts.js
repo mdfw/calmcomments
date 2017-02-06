@@ -1,4 +1,4 @@
-import { fetchPostsAPI, addPostAPI, updatePostAPI } from './postsAPI';
+import { fetchPostsAPI, addPostAPI, updatePostAPI, deletePostAPI } from './postsAPI';
 
 
 const RECEIVE_POSTS = 'RECEIVE_POSTS';
@@ -44,11 +44,11 @@ function submitEditPost(message, postId) {
 const DELETE_POST = 'DELETE_POST';
 function deletePost(postId) {
   return (dispatch) => {
-    dispatch(updatePostAPI(message, postId));
+    dispatch(deletePostAPI(postId));
     dispatch({
       type: DELETE_POST,
       postId: postId,
-    })
+    });
   };
 }
 

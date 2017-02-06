@@ -175,18 +175,18 @@ const updatePostAPI = function updatePostAPI(message, postId, formName) {
   };
 };
 
-// ------ //
-// UPDATING //
-// ------ //
+// -------- //
+// DELETING //
+// -------- //
 
 
-/* The heavy lifting work of deletign a post.
+/* The heavy lifting work of deleting a post.
  * @param {number} postId
  * Calls to the api endpoint to delete a post. If successful, clears form,
  *   and calls the fetch.
  */
-const deletePostAPI = function updatePostAPI(postId) {
-  return function fetchDeletePostDispatch(dispatch) {
+const deletePostAPI = function deletePostAPI(postId) {
+  return function fetchDeletePostDispatch() {
     if (!postId || postId.length === 0) {
       throw new Error('Missing postId for post.');
     }
@@ -198,19 +198,11 @@ const deletePostAPI = function updatePostAPI(postId) {
       credentials: 'same-origin',
     })
     .then(checkAPIReturn)
-    .then(function getUpdatedPosts() {
-      return dispatch(
-        fetchPosts(),
-      );
-    })
     .catch(function submitError(error) {
       const errMsg = error.message;
-      return dispatch(formUpdate(formName, {
-        submitting: false,
-        submitError: errMsg,
-      }));
+      console.log(`Could not delete! ${errMsg}`);
     });
   };
 };
 
-export { fetchPostsAPI, addPostAPI, updatePostAPI };
+export { fetchPostsAPI, addPostAPI, updatePostAPI, deletePostAPI };
