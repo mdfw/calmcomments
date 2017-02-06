@@ -39,8 +39,6 @@ const snsTheme = getMuiTheme({
 class App extends React.Component {
   componentDidMount() {
     const theSocket = SocketConnection(this.props.dispatch);
-    console.log('The socket');
-    console.dir(theSocket);
     this.io = theSocket;
   }
   render() {
