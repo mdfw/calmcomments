@@ -4,7 +4,7 @@ import { darkBlack, grey400, grey100, grey500, white, grey300, fullBlack } from 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { fade } from 'material-ui/utils/colorManipulator';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Header from '../components/Header';
+import SocketConnection from './socketConnection';
 
 const snsTheme = getMuiTheme({
   fontFamily: 'Open Sans, sans-serif',
@@ -36,29 +36,38 @@ const snsTheme = getMuiTheme({
 });
 
 
-function App(props) {
-  return (
-    <MuiThemeProvider muiTheme={snsTheme}>
-      <div id="mainapp">
-        <Header urlPath={props.urlPath} />
-        <div className="content">
-          {props.children}
+class App extends React.Component {
+  componentDidMount() {
+    const theSocket = SocketConnection(this.props.dispatch);
+    console.log('The socket');
+    console.dir(theSocket);
+    this.io = theSocket;
+  }
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={snsTheme}>
+        <div id="mainapp">
+          <div className="content">
+            {this.props.children}
+          </div>
         </div>
-      </div>
-    </MuiThemeProvider>
-  );
+      </MuiThemeProvider>
+    );
+  }
 }
 
 App.propTypes = {
   children: React.PropTypes.node,
-  urlPath: React.PropTypes.string,
+  dispatch: React.PropTypes.func.isRequired,
+};
+App.defaultProps = {
+  children: {},
 };
 
 /** redux store map **/
 const mapStateToProps = function mapStateToProps(state, ownprops) {
   return {
     children: ownprops.children,
-    urlPath: ownprops.location.pathname,
   };
 };
 

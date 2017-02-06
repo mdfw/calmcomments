@@ -1,5 +1,6 @@
 import {
   RECEIVE_LISTENERS,
+  RECEIVE_TIME,
 } from '../actions/listeners';
 
 const DEFAULT_POSTS_STATE = {
@@ -15,6 +16,13 @@ const listenersReducer = function listenersReducer(state = DEFAULT_POSTS_STATE, 
         listeners: action.listeners,
       };
       break;
+    }
+    case RECEIVE_TIME: {
+      newstate = {
+        ...state,
+        serverNow: action.now,
+        serverRelease: action.later,
+      }
     }
     default:
       break;
