@@ -1,5 +1,6 @@
 /* Base imports */
 import { Server } from 'http';
+import favicon from 'serve-favicon';
 import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
@@ -43,10 +44,12 @@ const tickTime = function tickTime(now, later) {
 const ttimer = new TTimer(5, triggerTime, tickTime); // eslint-disable-line no-unused-vars
 
 /* Middleware setup */
+app.use(favicon('build/public/assets/favicon.ico'));
 app.use((err, req, res, next) => {
   if (res.headersSent) next(err);
   res.status(err.status || port).render('500');
 });
+app.use(express.static('build/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const sessionMiddleware = session({
@@ -70,18 +73,37 @@ io.use(function ioSessionSetup(socket, next) {
 /* API Routes */
 app.use('/api/v1', [accountRoutes, authenticationRoutes, postRoutes]);
 
-const findAndEmitListeners = function findAndEmitListeners () {
-  const allSockets = io.sockets;
-  console.log('allSockets');
-  console.dir(allSockets);
-}
+// On socket connection, figure out who's still listening and send the list around.
+const findAndEmitListeners = function findAndEmitListeners() {
+  // TODO: this is likely inefficient at large loads
+  const listeners = [];
+  let guestCounter = 0;
+  const clients = Object.keys(io.eio.clients);
+
+  clients.forEach(function findNames(client) {
+    const clientSession = io.eio.clients[client].request.session;
+    if (clientSession &&
+      clientSession.passport &&
+      clientSession.passport.user
+    ) {
+      listeners.push(clientSession.passport.user.displayName);
+    } else {
+      guestCounter += 1;
+    }
+  });
+  if (guestCounter > 0) {
+    listeners.push(`${guestCounter} guests`);
+  }
+  io.emit('listeners', listeners);
+};
 
 /* Socket options */
-io.on('connection', function onConnect(socket) {
-  const userId = socket.request.session.passport.user;
-  console.log('Your User ID is', userId);
+io.on('connection', function onConnect() { // onConnect(socket)
+  console.log('CONNECTION');
+  findAndEmitListeners();
 });
 
+// TODO: need a disconnect listener
 
 app.get('/', function baseReturn(req, res) {
   res.send('Hello - this is the api server. You probably want a more interesting endpoint.');
