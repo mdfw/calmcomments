@@ -22,5 +22,7 @@ module.exports = {
       "object-shorthand": 0,
       "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
       "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+      "react/forbid-prop-types": 0,
+      "react/require-default-props": 0
     }
 };
