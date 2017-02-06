@@ -22,7 +22,8 @@ const listenersReducer = function listenersReducer(state = DEFAULT_POSTS_STATE, 
         ...state,
         serverNow: action.now,
         serverRelease: action.later,
-      }
+      };
+      break;
     }
     default:
       break;
