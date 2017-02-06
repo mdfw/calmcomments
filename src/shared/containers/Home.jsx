@@ -1,15 +1,19 @@
 import React from 'react';
-import CreatePostForm from './CreatePostForm';
 import Posts from './Posts';
+import Listeners from './Listeners';
 
-/* This is the component that holds the posts and actions for the post.
- *    Similar to a 'wall'
- */
-const Home = () => (
-  <div id="board" className="board">
-    <CreatePostForm />
-    <Posts />
-  </div>
-);
+function Home() {
+  return (
+    <div id="board" className="board">
+      <div className="leftSide">
+        <Listeners />
+      </div>
+      <div className="rightSide">
+        <Posts />
+      </div>
+    </div>
+  );
+}
+
 
 export default Home;
