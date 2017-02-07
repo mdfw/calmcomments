@@ -13,7 +13,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   console.log('Environment: loading TEST environment vars.');
   dotenv.load({ path: './envTest' });
 } else {
-  console.log(`Environment: did NOT load environment variables for ${process.env.NODE_ENV}.`);
+  console.log(`Environment: did NOT load environment variables from .env for ${process.env.NODE_ENV}. This is not a problem if you define your environment variables outside of the file system as you should.`);
 }
 
 /* If any of the environment variables(process.env.REDIS_URL) don't exist,
