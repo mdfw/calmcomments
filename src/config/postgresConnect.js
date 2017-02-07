@@ -1,9 +1,8 @@
 import Sequelize from 'sequelize';
 
-const sequelize = new Sequelize('calmcomment', 'mdw', 'null', {
-  dialect: 'postgres', // or 'sqlite', 'postgres', 'mariadb'
-  port: 5432, // or 5432 (for postgres)
-});
+const DATABASE_URL = process.env.DATABASE_URL;
+
+const sequelize = new Sequelize(DATABASE_URL);
 
 sequelize
   .authenticate()

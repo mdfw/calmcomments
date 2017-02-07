@@ -18,6 +18,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'production') {
  */
 requireEnv([
   'REDIS_URL',
+  'DATABASE_URL',
   'MAIN_SERVER_PORT',
   'ACCOUNT_PEPPER_1',
   'ACCOUNT_ENCRYPT_CURRENT_PEPPER',
