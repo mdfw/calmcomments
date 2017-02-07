@@ -18,7 +18,7 @@ function checkAPIReturn(response) {
   if (response.status === 201 ||
     response.status === 200 ||
     response.status === 204 ||
-    response.status === 20
+    response.status === 205
   ) {
     return response;
   }
