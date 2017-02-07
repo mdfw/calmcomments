@@ -47,7 +47,7 @@ const ttimer = new TTimer(5, triggerTime, tickTime); // eslint-disable-line no-u
 app.use(favicon('build/public/assets/favicon.ico'));
 app.use((err, req, res, next) => {
   if (res.headersSent) next(err);
-  res.status(err.status || port).render('500');
+  res.status(err.status || ourPort).render('500');
 });
 app.use(express.static('build/public'));
 app.use(bodyParser.json());
