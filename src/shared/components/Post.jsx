@@ -8,7 +8,7 @@ const timeStyle = {
   marginLeft: '5px',
 };
 
-
+/* eslint-disable jsx-a11y/href-no-hash */
 function Post(props) {
   let controls = null;
   if (props.canEditDelete) {
@@ -36,6 +36,7 @@ function Post(props) {
     </div>
   );
 }
+/* eslint-enable jsx-a11y/href-no-hash */
 
 Post.propTypes = {
   edited: React.PropTypes.bool,

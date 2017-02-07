@@ -155,7 +155,7 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
             />
           </div>
           <div style={{ height: '50px' }}>
-            <div style={{ float: 'left'}}>
+            <div style={{ float: 'left' }}>
               <RaisedButton
                 label="Post"
                 primary={true} // eslint-disable-line react/jsx-boolean-value

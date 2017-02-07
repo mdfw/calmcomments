@@ -20,12 +20,6 @@ SubmitProgress.defaultProps = {
   submitting: false,
 };
 
-
-/* button style for the submit button below */
-const submitButtonStyle = {
-  margin: 12,
-};
-
 class EditPostForm extends React.Component { // eslint-disable-line react/no-multi-comp
   constructor() {
     super();
@@ -72,7 +66,7 @@ class EditPostForm extends React.Component { // eslint-disable-line react/no-mul
       borderRadius: '10px',
       borderStyle: 'solid',
     };
-    
+
     const textAreaStyle = {
       fontFamily: 'Open Sans',
       fontSize: '18px',

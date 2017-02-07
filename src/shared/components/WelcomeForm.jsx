@@ -13,10 +13,13 @@ function WelcomeForm() {
 
   return (
     <div style={welcomePostPaperStyle}>
-      Welcome to Calm Comments. Comments can be posted at any time (after you log in). However, new posts are only distributed every 5 minutes. This allows those of different temperaments to participate.
+      Welcome to Calm Comments.<br />
+      Comments can be posted at any time (after you log in).
+      However, new posts are only distributed every 5 minutes.
+      This allows those of different temperaments to participate.
       <div style={{ fontSize: '12px', marginTop: '13px' }}>
         <NowTimer />
-        <span>  |  </span>
+        <span> | </span>
         <ReleaseTimer />
       </div>
 
