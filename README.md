@@ -1,12 +1,23 @@
 # App: Calm comments
 ## Description
+A basic commenting system with a twist. All new and updated posts are sequestered for up to 5 minutes. After 5 minutes is up, posts are broadcasted through socket.io to all connected clients. 
+
+## Why?
+People are different. Some need time to think and consider but some chat rooms can be too busy for them. By sequestering all posts, users get a chance to consider their post. 
+
+## Future directions
+* The sequester time (5 minutes) is hard coded. Should be configurable.
+* Other rooms
+* Indication of those posts that are new and updated.
+* Some limits on scroll
 
 ## Features
 * React(ES6) & Redux based SPA application
+* Markdown for editing
 * Express on node backend
-* API server as a separate node process proxied from main server
-* MongoDB database for accounts and posts
-* Mongoose for Mongo models
+* Socket.io for outbound from server updates
+* Postgres database for accounts and posts
+* Sequelize for Postgres models
 * Salted bcrypt and peppered AES256 encrypted passwords
 * Passportjs authentication middleware
 * Redis for session storage
@@ -14,11 +25,6 @@
 * Production configuration for webpack to reduce build sizes
 * chai & mocha based tests
 
-## Style
-* Main color: #459691
-* Highlight: #c94f49
-* Supporting: #4376a3
-* Icon: Dandelion
 
 ## Screen shots
 
