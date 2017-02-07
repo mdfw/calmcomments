@@ -1,16 +1,25 @@
 import React from 'react';
+import { NowTimer, ReleaseTimer } from '../containers/Timers';
 
 function WelcomeForm() {
-  const createPostPaperStyle = {
+  const welcomePostPaperStyle = {
     padding: '15px',
-    boxShadow: 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px',
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
     marginBottom: '15px',
+    borderColor: 'lightGray',
+    borderWidth: '1px',
+    borderRadius: '10px',
+    borderStyle: 'solid',
   };
 
   return (
-    <div style={createPostPaperStyle}>
+    <div style={welcomePostPaperStyle}>
       Welcome to Calm Comments. Comments can be posted at any time (after you log in). However, new posts are only distributed every 5 minutes. This allows those of different temperaments to participate.
+      <div style={{ fontSize: '12px', marginTop: '13px' }}>
+        <NowTimer />
+        <span>  |  </span>
+        <ReleaseTimer />
+      </div>
+
     </div>
   );
 }

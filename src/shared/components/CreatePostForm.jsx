@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextareaAutosize from 'react-autosize-textarea';
+import { NowTimer, ReleaseTimer } from '../containers/Timers';
 
 /* SubmitProgress shows a spinner while we wait for account creation.
   */
@@ -116,14 +117,12 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
     }
     const createPostPaperStyle = {
       padding: '15px',
-      boxShadow: 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px',
-      transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
       marginBottom: '15px',
+      borderColor: 'lightGray',
+      borderWidth: '1px',
+      borderRadius: '10px',
+      borderStyle: 'solid',
     };
-
-    if (this.state.fieldActive) {
-      createPostPaperStyle.boxShadow = 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px';
-    }
 
     const textAreaStyle = {
       fontFamily: 'Open Sans',
@@ -155,14 +154,20 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
               aria-label="Message content"
             />
           </div>
-          <div>
-            <RaisedButton
-              label="Post"
-              primary={true} // eslint-disable-line react/jsx-boolean-value
-              style={submitButtonStyle}
-              disabled={submitting || !errors.formReady}
-              type="submit"
-            />
+          <div style={{ height: '50px' }}>
+            <div style={{ float: 'left'}}>
+              <RaisedButton
+                label="Post"
+                primary={true} // eslint-disable-line react/jsx-boolean-value
+                style={submitButtonStyle}
+                disabled={submitting || !errors.formReady}
+                type="submit"
+              />
+            </div>
+            <div style={{ float: 'left', fontSize: '12px', marginTop: '13px' }}>
+              <NowTimer /><br />
+              <ReleaseTimer />
+            </div>
           </div>
         </form>
         <SubmitProgress submitting={submitting} />

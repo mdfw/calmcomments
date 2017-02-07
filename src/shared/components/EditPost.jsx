@@ -1,6 +1,6 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import TextareaAutosize from 'react-autosize-textarea';
 
 /* SubmitProgress shows a spinner while we wait for account creation.
@@ -65,24 +65,19 @@ class EditPostForm extends React.Component { // eslint-disable-line react/no-mul
     } = this.props;
 
     const createPostPaperStyle = {
-      padding: '5px',
-      boxShadow: 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px',
-      transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+      padding: '15px',
       marginBottom: '15px',
+      borderColor: 'lightGray',
+      borderWidth: '1px',
+      borderRadius: '10px',
+      borderStyle: 'solid',
     };
-
-    if (this.state.fieldActive) {
-      createPostPaperStyle.boxShadow = '#459691 0px 3px 10px, #d9ecfc 0px 3px 10px';
-    }
-
+    
     const textAreaStyle = {
       fontFamily: 'Open Sans',
       fontSize: '18px',
       width: '100%',
       borderColor: 'lightGrey',
-      borderTopColor: 'transparent',
-      borderLeftColor: 'transparent',
-      borderRightColor: 'transparent',
       resize: 'none',
       outlineWidth: '1px',
       outlineColor: '#4798ad',
@@ -107,10 +102,9 @@ class EditPostForm extends React.Component { // eslint-disable-line react/no-mul
             />
           </div>
           <div>
-            <RaisedButton
-              label="Post"
+            <FlatButton
+              label="Update"
               primary={true} // eslint-disable-line react/jsx-boolean-value
-              style={submitButtonStyle}
               disabled={submitting || !errors.formReady}
               type="submit"
             />

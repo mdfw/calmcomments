@@ -2,30 +2,6 @@ import { connect } from 'react-redux';
 import React from 'react';
 import moment from 'moment';
 
-class Timers extends React.Component {
-  render() {
-    let nowDate = null;
-    if (this.props.listeners.serverNow) {
-      nowDate = moment(this.props.listeners.serverNow).format('LTS');
-    }
-    let release = null;
-    if (this.props.listeners.serverRelease) {
-      release = moment(this.props.listeners.serverRelease).format('LTS');
-    }
-    if (!nowDate || !release) {
-      return null;
-    }
-    return (
-      <div style={{ fontSize: '12px' }} >
-        Now: {nowDate}<br />Next release: {release}
-      </div>
-    );
-  }
-}
-
-Timers.propTypes = {
-  listeners: React.PropTypes.object.isRequired,
-};
 
 /** redux store map **/
 const mapStateToProps = function mapStateToProps(state) {
@@ -34,6 +10,50 @@ const mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-const Container = connect(mapStateToProps)(Timers);
+/* eslint-disable react/no-multi-comp */
 
-export default Container;
+/* Now timer */
+class NowTimerContainer extends React.Component {
+  render() {
+    let nowDate = null;
+    if (this.props.listeners.serverNow) {
+      nowDate = moment(this.props.listeners.serverNow).format('LTS');
+    }
+    if (!nowDate) {
+      return null;
+    }
+    return (
+      <span>Now: {nowDate}</span>
+    );
+  }
+}
+NowTimerContainer.propTypes = {
+  listeners: React.PropTypes.object.isRequired,
+};
+const NowTimer = connect(mapStateToProps)(NowTimerContainer);
+
+
+/* Release timer*/
+class ReleaseTimerContainer extends React.Component {
+  render() {
+    let release = null;
+    if (this.props.listeners.serverRelease) {
+      release = moment(this.props.listeners.serverRelease).format('LTS');
+    }
+    if (!release) {
+      return null;
+    }
+    return (
+      <span>Next release: {release}</span>
+    );
+  }
+}
+ReleaseTimerContainer.propTypes = {
+  listeners: React.PropTypes.object.isRequired,
+};
+const ReleaseTimer = connect(mapStateToProps)(ReleaseTimerContainer);
+
+/* eslint-enable react/no-multi-comp */
+
+
+export { ReleaseTimer, NowTimer };

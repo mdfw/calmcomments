@@ -2,17 +2,10 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import moment from 'moment';
 
-const nameStyle = {
-  fontWeight: 'bold',
-  fontFamily: 'Source Sans Pro',
-};
 const timeStyle = {
   fontSize: '10px',
   color: 'gray',
   marginLeft: '5px',
-};
-const postStyle = {
-  marginTop: '-5px',
 };
 
 
@@ -35,11 +28,10 @@ function Post(props) {
   return (
     <div className="post">
       <div>
-        <hr />
-        <span style={nameStyle}>{props.accountDisplayName}</span>
+        <span className="post-account">{props.accountDisplayName}</span>
         <span style={timeStyle}>{createdTime}{editedTime}</span>
       </div>
-      <div style={postStyle}><ReactMarkdown source={props.messageValue} /></div>
+      <div className="post-content"><ReactMarkdown source={props.messageValue} /></div>
       {controls}
     </div>
   );
