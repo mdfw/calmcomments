@@ -35,3 +35,7 @@ People are different. Some need time to think and consider but some chat rooms c
 
 ![Phone](https://github.com/mdfw/calmcomments/blob/master/readme/calmCommentsOnPhone.png "On Phone")
 
+## Acknowledgements
+* Uses a personally modified version of Loading Wheel by Guilhem from the Noun Project under CC BY 3.0 US
+
+Copyright 2017 Mark Williams
