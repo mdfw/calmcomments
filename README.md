@@ -15,6 +15,7 @@ People are different. Some need time to think and consider but some chat rooms c
 * React(ES6) & Redux based SPA application
 * Markdown for editing
 * Express on node backend
+* Full CRUD actions for posts through the API
 * Socket.io for outbound from server updates
 * Postgres database for accounts and posts
 * Sequelize for Postgres models
