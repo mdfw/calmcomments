@@ -4,7 +4,7 @@
   "description": "A Project to learn",
   "main": "build/server.js",
   "scripts": {
-    "start": "run-p _start:mainserver",
+    "start": "_start:mainserver",
     "_start:mainserver": "node build/server.js",
     "dev": "run-p watch lint serve:dev",
     "test": "mocha --recursive --compilers js:babel-core/register",
