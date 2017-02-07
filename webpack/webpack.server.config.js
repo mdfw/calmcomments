@@ -12,7 +12,7 @@ fs.readdirSync('node_modules')
   });
 
 module.exports = {
-  entry: path.resolve(__dirname, '../src/server/server.jsx'),
+  entry: path.resolve(__dirname, '../src/server/server.js'),
   target: 'node',
   output: {
     path: path.join(__dirname, '../build'),
@@ -26,7 +26,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /.jsx?$/,
+        test: /.(jsx|js)?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
