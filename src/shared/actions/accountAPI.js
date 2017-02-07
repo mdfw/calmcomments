@@ -51,7 +51,7 @@ function checkAccountReturn(response) {
 // -------- //
 const fetchAccountAPI = function fetchAccountAPI() {
   return function fetchPageDispatch(dispatch) {
-    const url = '/api/v1/account';
+    const url = '/api/v1/accounts';
     return fetch(url, {
       credentials: 'same-origin',
     })
@@ -207,7 +207,7 @@ const addAccountAPI = function addAccountAPI(displayName, email, password) {
     }
     // Set the submitting flag
     dispatch(submittingAccountInfo());
-    fetch('/api/v1/account', {
+    fetch('/api/v1/accounts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
