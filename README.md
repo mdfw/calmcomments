@@ -27,7 +27,11 @@ People are different. Some need time to think and consider but some chat rooms c
 
 
 ## Screen shots
+*Main Page*
 
+![Main Page](https://github.com/mdfw/calmcomments/blob/master/readme/calmCommentsScreenshot.png "Main Page")
 
+*Phone*
 
-## User Stories - implemented
+![Phone](https://github.com/mdfw/calmcomments/blob/master/readme/calmCommentsOnPhone.png "On Phone")
+
