@@ -52,7 +52,7 @@
     "deploy:build:js": "run-s clean:js mkdir:js deploy:_build:js",
     "deploy:_build:js": "run-s deploy:_build:js:server deploy:_build:js:client",
     "deploy:_build:js:server": "webpack --config webpack/webpack.server.prod.config.js",
-    "deploy:_build:js:client": "webpack --config webpack/webpack.client.prod.config.js",
+    "deploy:_build:js:client": "webpack --config webpack/webpack.client.prod.config.js"
   },
   "author": "Mark Williams",
   "license": "ISC",
