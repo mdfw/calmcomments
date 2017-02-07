@@ -18,16 +18,13 @@ import { formClear, REG_FORM_NAME, LOGIN_FORM_NAME } from './forms';
  *  this have agreement on what to expect?
  */
 function dispatchAccountData(dispatch, data) {
-  console.log('dispatchAccountData:');
-  console.dir(data);
-
   const account = data.account;
   if (!account.displayName ||
     account.displayName.length === 0 ||
     !account.email ||
     account.email.length === 0 ||
-    !account.accountId ||
-    account.accountId.length === 0
+    !account.id ||
+    account.id.length === 0
   ) {
     throw new Error('Invalid account information returned.');
   }
@@ -118,7 +115,6 @@ const loginAccountAPI = function loginAccountAPI(email, password) {
     })
     .then(function processReturn(response) {
       if (response.status === 201 || response.status === 200) {
-        console.log('login ok');
         return Promise.resolve(response.json())
         .then(function sendAccountData(data) {
           return dispatchAccountData(dispatch, data);

@@ -15,7 +15,11 @@ import { formUpdate, formClear, CREATE_POST_FORM_NAME } from './forms';
  * Returns the server response object on 201 status
  */
 function checkAPIReturn(response) {
-  if (response.status === 201 || response.status === 200 || response.status === 204) {
+  if (response.status === 201 ||
+    response.status === 200 ||
+    response.status === 204 ||
+    response.status === 20
+  ) {
     return response;
   }
   const error = new Error(response.statusText);
@@ -151,19 +155,10 @@ const updatePostAPI = function updatePostAPI(message, postId, formName) {
       }),
     })
     .then(checkAPIReturn)
-    .then(function processJsonResponse(response) {
-      return response.json();
-    })
     .then(dispatchEditPostFormClear(dispatch, formName))
-    .then(function getUpdatedPosts() {
-      return dispatch(
-        fetchPosts(),
-      );
-    })
     .catch(function submitError(error) {
       const errMsg = error.message;
       return dispatch(formUpdate(formName, {
-        submitting: false,
         submitError: errMsg,
       }));
     });

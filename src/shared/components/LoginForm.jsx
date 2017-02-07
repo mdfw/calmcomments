@@ -81,7 +81,6 @@ class LoginForm extends React.Component { // eslint-disable-line react/no-multi-
       errors,
       emailValue,
       passwordValue,
-      passwordFieldType,
     } = this.props;
 
     let errorInfo = null;
@@ -92,7 +91,7 @@ class LoginForm extends React.Component { // eslint-disable-line react/no-multi-
       <div>
         <form onSubmit={this.onSubmit}>
           <div className="text-header">
-            Log in to Social, Not Social
+            Log in to Calm Comments
           </div>
           <div>
             <Link to="/signup" className="loginHints">or Sign up</Link>
@@ -119,7 +118,7 @@ class LoginForm extends React.Component { // eslint-disable-line react/no-multi-
               value={passwordValue}
               floatingLabelText="Password"
               disabled={loggingIn}
-              type={passwordFieldType}
+              type="password"
               errorText={errors.password}
               onChange={this.onChange}
               onBlur={this.onBlur}
@@ -154,16 +153,13 @@ LoginForm.propTypes = {
   errors: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   emailValue: React.PropTypes.string,
   passwordValue: React.PropTypes.string,
-  passwordFieldType: React.PropTypes.string,
 };
 
 LoginForm.defaultProps = {
   inlineForm: false,
   loggingIn: false,
   emailValue: '',
-  passwordValue: '',
   errors: {},
-  passwordFieldType: 'password',
 };
 
 export default LoginForm;

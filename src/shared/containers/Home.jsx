@@ -1,19 +1,16 @@
 import React from 'react';
 import Posts from './Posts';
-import Listeners from './Listeners';
+import CreatePostForm from './CreatePostForm';
+import Timers from './Timers';
 
 function Home() {
   return (
-    <div id="board" className="board">
-      <div className="leftSide">
-        <Listeners />
-      </div>
-      <div className="rightSide">
-        <Posts />
-      </div>
+    <div id="bottombits" className="board">
+      <CreatePostForm />
+      <Timers />
+      <Posts />
     </div>
   );
 }
-
 
 export default Home;

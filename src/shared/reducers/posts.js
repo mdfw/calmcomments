@@ -37,7 +37,7 @@ function removePost(existingPosts, postId) {
     }
     return false;
   });
-  if (ind === -1) {
+  if (ind > -1) {
     updatedPosts.splice(ind, 1);
   }
   return updatedPosts;

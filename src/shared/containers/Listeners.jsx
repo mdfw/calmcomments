@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import Listener from '../components/Listener';
 
 /* Renders if there are no posts */
 const noListenersStyle = {
@@ -19,14 +18,17 @@ const NoListeners = () => (
 /* Renders a list of listeners */
 const AllListeners = ({ listeners }) => {
   const listenerComponents = [];
-  let listenerNumber = 1;
   listeners.map((listener) => { // eslint-disable-line array-callback-return
-    listenerComponents.push(<Listener key={`listener${listenerNumber}`} displayName={listener} />);
-    listenerNumber += 1;
+    if (listener && listener.length > 0) {
+      listenerComponents.push(listener);
+    }
   });
+  if (listenerComponents.length === 0) {
+    return null;
+  }
   return (
     <div>
-      {listenerComponents}
+      Listening: {listenerComponents.join(', ')}
     </div>
   );
 };

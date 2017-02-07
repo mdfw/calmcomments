@@ -5,14 +5,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { fade } from 'material-ui/utils/colorManipulator';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SocketConnection from './socketConnection';
+import Header from '../components/Header';
 
 const snsTheme = getMuiTheme({
   fontFamily: 'Open Sans, sans-serif',
   palette: {
-    primary1Color: '#459691',
-    primary2Color: '#47ad8a',
+    primary1Color: '#2DB3FF',
+    primary2Color: '#735899',
     primary3Color: grey400,
-    accent1Color: '#c94f49',
+    accent1Color: '#cc7a10',
     accent2Color: grey100,
     accent3Color: grey500,
     textColor: darkBlack,
@@ -20,7 +21,7 @@ const snsTheme = getMuiTheme({
     canvasColor: white,
     borderColor: grey300,
     disabledColor: fade(darkBlack, 0.3),
-    pickerHeaderColor: '#459691',
+    pickerHeaderColor: '#2d47ff',
     clockCircleColor: fade(darkBlack, 0.07),
     shadowColor: fullBlack,
   },
@@ -31,7 +32,7 @@ const snsTheme = getMuiTheme({
     disabledColor: grey300,
   },
   overlay: {
-    backgroundColor: '#4376a3',
+    backgroundColor: '#2d47ff',
   },
 });
 
@@ -45,6 +46,7 @@ class App extends React.Component {
     return (
       <MuiThemeProvider muiTheme={snsTheme}>
         <div id="mainapp">
+          <Header urlPath={this.props.urlPath} />
           <div className="content">
             {this.props.children}
           </div>
@@ -57,15 +59,18 @@ class App extends React.Component {
 App.propTypes = {
   children: React.PropTypes.node,
   dispatch: React.PropTypes.func.isRequired,
+  urlPath: React.PropTypes.string,
 };
 App.defaultProps = {
   children: {},
+  urlPath: '',
 };
 
 /** redux store map **/
 const mapStateToProps = function mapStateToProps(state, ownprops) {
   return {
     children: ownprops.children,
+    urlPath: ownprops.location.pathname,
   };
 };
 

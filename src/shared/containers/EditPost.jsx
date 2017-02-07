@@ -22,16 +22,20 @@ function determineErrors(message, touched, exited) {
 }
 
 class EditPostContainer extends React.Component {
-  handleSubmit() {
-    this.props.dispatch(
-     submitEditPost(this.props.message, this.props.postId),
-    );
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
   handleChange(fields) {
     this.props.dispatch(formUpdate(this.props.formName, fields));
-    if (this.props.submitError) {
-      this.props.dispatch(formUpdate(this.props.formName, { submitError: '' }));
-    }
+  }
+  handleSubmit() {
+    this.props.dispatch(
+      submitEditPost(this.props.message, this.props.postId, this.props.formName),
+    );
   }
   handleFocus(fieldName) {
     if (this.props.fieldsTouched.indexOf(fieldName) === -1) {
@@ -88,14 +92,12 @@ EditPostContainer.defaultProps = {
 
 /** redux store map **/
 const mapStateToProps = function mapStateToProps(state, ownprops) {
-  const formName = `editPost${ownprops.postId}`;
   return {
-    formName: formName,
-    message: state.forms[formName].message,
-    fieldsTouched: state.forms[formName].fieldsTouched,
-    fieldsExited: state.forms[formName].fieldsExited,
-    submitError: state.forms[formName].submitError,
-    submitting: state.forms[formName].submitting,
+    message: state.forms[ownprops.formName].message,
+    fieldsTouched: state.forms[ownprops.formName].fieldsTouched,
+    fieldsExited: state.forms[ownprops.formName].fieldsExited,
+    submitError: state.forms[ownprops.formName].submitError,
+    submitting: state.forms[ownprops.formName].submitting,
   };
 };
 

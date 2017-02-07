@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { fetchPosts } from '../actions/posts';
-import Post from '../components/Post';
+import Post from './Post';
 
 /* Renders if there are no posts */
 const noPostsStyle = {
@@ -13,7 +13,7 @@ const noPostsStyle = {
 
 const NoPosts = () => (
   <div id="noPosts" style={noPostsStyle}>
-    There are no posts to show. Yet.
+    There are no posts to show.
   </div>
 );
 
@@ -21,7 +21,7 @@ const NoPosts = () => (
 const AllPosts = ({ posts }) => (
   <div>
     {posts.map(post => (
-      <Post message={post.message} subject={post.subject} key={post.postId} />
+      <Post key={post.id} post={post} />
     ))}
   </div>
 );
@@ -35,24 +35,38 @@ class PostsContainer extends React.Component {
     this.props.dispatch(fetchPosts());
   }
   render() {
-    if (this.props.posts.length === 0) {
+    const allPosts = this.props.posts.posts;
+    if (allPosts.length === 0) {
       return (<NoPosts />);
     }
+    allPosts.sort(function comparePostDates(posta, postb) {
+      if (posta.createdAt > postb.createdAt) {
+        return -1;
+      }
+      if (posta.createdAt < postb.createdAt) {
+        return 1;
+      }
+      // dates must be equal
+      return 0;
+    });
     return (
-      <AllPosts posts={this.props.posts} />
+      <AllPosts posts={allPosts} />
     );
   }
 }
 
 PostsContainer.propTypes = {
-  posts: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  dispatch: React.PropTypes.func,
+  posts: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  dispatch: React.PropTypes.func.isRequired,
+};
+PostsContainer.defaultProps = {
+  posts: {},
 };
 
 /** redux store map **/
 const mapStateToProps = function mapStateToProps(state) {
   return {
-    posts: state.posts.posts,
+    posts: state.posts,
   };
 };
 

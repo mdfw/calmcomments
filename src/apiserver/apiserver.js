@@ -29,12 +29,12 @@ const io = new SocketIO(server);
 
 /* Timer setup */
 const triggerTime = function triggerTime(lastTimeStamp) {
-  const newMessages = PostController.getPostsSinceDate(lastTimeStamp);
-  if (newMessages) {
-    console.log(`Emitting messages: ${newMessages.length}`);
-    io.emit('messages', newMessages);
-  }
-  console.log('Time triggered');
+  PostController.getPostsSinceDate(lastTimeStamp)
+    .then(function allPosts(newMessages) {
+      if (newMessages) {
+        io.emit('messages', newMessages);
+      }
+    });
 };
 
 const tickTime = function tickTime(now, later) {
@@ -98,9 +98,13 @@ const findAndEmitListeners = function findAndEmitListeners() {
 };
 
 /* Socket options */
-io.on('connection', function onConnect() { // onConnect(socket)
+io.on('connection', function onConnect(socket) { // onConnect(socket)
   console.log('CONNECTION');
   findAndEmitListeners();
+  socket.on('nick', function sendNick(name) {
+    socket.nick = name; // eslint-disable-line no-param-reassign
+    findAndEmitListeners();
+  });
 });
 
 // TODO: need a disconnect listener

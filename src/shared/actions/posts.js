@@ -35,9 +35,9 @@ function submitNewPost(message) {
   };
 }
 
-function submitEditPost(message, postId) {
+function submitEditPost(message, postId, formName) {
   return (dispatch) => {
-    dispatch(updatePostAPI(message, postId));
+    dispatch(updatePostAPI(message, postId, formName));
   };
 }
 

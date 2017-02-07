@@ -4,7 +4,6 @@ import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextareaAutosize from 'react-autosize-textarea';
-import Settings from '../settings';
 
 /* SubmitProgress shows a spinner while we wait for account creation.
   */
@@ -105,7 +104,6 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
       submitting,
       errors,
       messageValue,
-      subjectValue,
     } = this.props;
     let errorDialog = null;
     if (this.props.errors.submitError) {
@@ -124,7 +122,7 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
     };
 
     if (this.state.fieldActive) {
-      createPostPaperStyle.boxShadow = '#459691 0px 3px 10px, #d9ecfc 0px 3px 10px';
+      createPostPaperStyle.boxShadow = 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px';
     }
 
     const textAreaStyle = {
@@ -132,44 +130,9 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
       fontSize: '18px',
       width: '100%',
       borderColor: 'lightGrey',
-      borderTopColor: 'transparent',
-      borderLeftColor: 'transparent',
-      borderRightColor: 'transparent',
       resize: 'none',
       outlineWidth: '1px',
       outlineColor: '#4798ad',
-    };
-
-    const subjectStyle = {
-      borderWidth: '1px',
-      borderColor: 'lightGrey',
-      borderTopColor: 'transparent',
-      borderLeftColor: 'transparent',
-      borderRightColor: 'transparent',
-      fontFamily: 'Open Sans',
-      fontSize: '14px',
-      outlineWidth: '1px',
-      outlineColor: '#4798ad',
-      width: '100%',
-    };
-
-    const subjectLabelStyle = {
-      fontFamily: 'Open Sans',
-      fontSize: '14px',
-      color: 'gray',
-      marginTop: '4px',
-      float: 'left',
-    };
-
-    const subjectAreaStyle = {
-      overflow: 'hidden',
-      width: '100%',
-    };
-
-    const subjectInputContainerStyle = {
-      display: 'block',
-      overflow: 'hidden',
-      padding: '0 4px 0 6px',
     };
 
     return (
@@ -178,7 +141,7 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
         <form onSubmit={this.onSubmit}>
           <div>
             <TextareaAutosize
-              placeholder="What do you want to share?"
+              placeholder=""
               maxRows={3}
               rows={2}
               disabled={submitting}
@@ -187,26 +150,10 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
               onFocus={this.onFocus}
               name="message"
               value={messageValue}
-              maxLength={Settings.postMaxCharacters}
+              maxLength={5000}
               style={textAreaStyle}
               aria-label="Message content"
             />
-          </div>
-          <div style={subjectAreaStyle}>
-            <label htmlFor="subject" style={subjectLabelStyle}>Subject</label>
-            <span style={subjectInputContainerStyle}>
-              <input
-                type="text"
-                name="subject"
-                placeholder="(optional)"
-                value={subjectValue}
-                disabled={submitting}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-                onFocus={this.onFocus}
-                style={subjectStyle}
-              />
-            </span>
           </div>
           <div>
             <RaisedButton
@@ -233,7 +180,6 @@ CreatePostForm.propTypes = {
   submitting: React.PropTypes.bool,
   errors: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   messageValue: React.PropTypes.string,
-  subjectValue: React.PropTypes.string,
 };
 
 export default CreatePostForm;

@@ -2,9 +2,9 @@ import React from 'react';
 
 function Listener({ displayName }) {
   return (
-    <div className="listener">
+    <span className="listener">
       { displayName }
-    </div>
+    </span>
   );
 }
 

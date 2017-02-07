@@ -109,7 +109,7 @@ const getSinglePostEndpoint = (req, res) => { // eslint-disable-line consistent-
 const getPostsSinceDate = (sinceDateStamp) => { // eslint-disable-line consistent-return
   const ttimer = new TTimer();
   const lastTime = ttimer.lastTimestamp;
-  Post.findAll({
+  return Post.findAll({
     where: {
       createdAt: {
         $lt: new Date(lastTime),
@@ -207,7 +207,7 @@ const updatePostEndpoint = (req, res) => {
     {
       where: {
         id: itemId,
-        accountID: accountId,
+        AccountId: accountId,
       },
     })
   .then(function updateIt(post) {
@@ -259,7 +259,7 @@ const removePostEndpoint = (req, res) => {
     {
       where: {
         id: itemId,
-        accountID: accountId,
+        AccountId: accountId,
       },
     })
   .then(function destroyIt(post) {
