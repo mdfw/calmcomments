@@ -50,6 +50,9 @@ class App extends React.Component {
           <div className="content">
             {this.props.children}
           </div>
+          <div style={{ opacity: '0.5', position: 'fixed', bottom: '5px', right: '10px', fontSize: '12px' }}>
+            Copyright &copy; 2017 Mark Williams
+          </div>
         </div>
       </MuiThemeProvider>
     );
