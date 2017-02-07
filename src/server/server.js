@@ -18,9 +18,9 @@ import redisClient from '../config/redisConnect';
 const RedisStore = require('connect-redis')(session);
 
 /* Main server setup */
-let port = process.env.MAIN_SERVER_PORT;
-if (!port) {
-  port = 3009;
+let ourPort = process.env.MAIN_SERVER_PORT;
+if (!ourPort) {
+  ourPort = 3009;
 }
 
 const app = express();
@@ -124,7 +124,7 @@ app.on('close', () => {
 });
 
 /* Start the API Server */
-
+const port = process.env.PORT || ourPort;
 server.listen(port, function reportOnListen(error) {
   if (error) {
     console.log(`Server ERROR on startup: ${error}`);
