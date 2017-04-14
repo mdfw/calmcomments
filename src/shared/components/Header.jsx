@@ -39,18 +39,17 @@ const Header = (props) => {
       <nav className="top-navigation">
         <div className="content">
           <div className="top-title">
-            <span>
-              <Link to="/">
-                <img
-                  className="logo"
-                  src="assets/calmlogo.svg"
-                  alt="Calm comments logo"
-                  width="35"
-                  height="35"
-                />
-              </Link>
-            </span>
-            <span>Calm comments</span>
+            <Link to="/">
+              <span className="top-title-text">Calm</span>
+              <img
+                className="logo"
+                src="assets/calmlogo.svg"
+                alt="Calm comments logo"
+                width="20"
+                height="20"
+              />
+              <span className="top-title-text">Comments</span>
+            </Link>
             <span className="welcome">
               {rightSide}
             </span>
