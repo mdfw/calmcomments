@@ -1,23 +1,18 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { Link } from 'react-router';
-import FlatButton from 'material-ui/FlatButton';
 import HeaderLoggedInButton from './HeaderLoggedInButton';
+import { TimersDisplay } from '../containers/Timers';
 
 const HeaderLogin = () => (
   <Link to="/login">
-    <FlatButton
-      label="Login"
-    />
+    <button className="top-buttons" name="login">login</button>
   </Link>
 );
 
 const HeaderSignup = () => (
   <Link to="/signup">
-    <FlatButton
-      label="Sign Up"
-      secondary={true} // eslint-disable-line react/jsx-boolean-value
-    />
+    <button className="top-buttons" name="button">Sign up</button>
   </Link>
 );
 
@@ -36,7 +31,9 @@ const Header = (props) => {
   const rightSide = rightSideOption(props.urlPath, props.authenticated, props.displayName);
   return (
     <div>
+      <div className="topSpacer" />
       <nav className="top-navigation">
+        <div className="top-nav-overlay" />
         <div className="content">
           <div className="top-title">
             <Link to="/">
@@ -50,13 +47,13 @@ const Header = (props) => {
               />
               <span className="top-title-text">Comments</span>
             </Link>
-            <span className="welcome">
-              {rightSide}
-            </span>
+            {rightSide}
+          </div>
+          <div className="top-timers">
+            <TimersDisplay />
           </div>
         </div>
       </nav>
-      <div className="topSpacer" />
     </div>
   );
 };

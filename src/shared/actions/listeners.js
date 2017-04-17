@@ -16,9 +16,18 @@ function receiveTime(now, later) {
   };
 }
 
+const RECEIVE_NOT_RECENT = 'RECEIVE_NOT_RECENT';
+function receiveNotRecent() {
+  return {
+    type: RECEIVE_NOT_RECENT,
+  };
+}
+
 export {
   RECEIVE_LISTENERS,
   receiveListeners,
   RECEIVE_TIME,
   receiveTime,
+  RECEIVE_NOT_RECENT,
+  receiveNotRecent,
 };

@@ -18,8 +18,10 @@ div
 
 .content
 {
-	max-width: 970px;
 	margin: 0 auto;
+	max-width: 970px;
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .top-navigation
@@ -29,9 +31,19 @@ div
 	top: 0;
 	right: 0;
 	left: 0;
-	z-index: 9999;
-	height: 50px;
+	height: 70px;
 	padding-top: 5px;
+}
+
+.top-nav-overlay {
+  background-image: url(https://www.transparenttextures.com/patterns/twinkle-twinkle.png);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  height: 70px;
+  padding-top: 5px;
 }
 
 .top-title {
@@ -39,14 +51,18 @@ div
   font-family: 'Oswald';
   font-size: 25px;
   font-weight: 500;
+  margin-bottom: -10px;
+  padding-left: 15px;
+  padding-right: 15px;
   width: 100%;
-  margin-left: 15px;
 }
 
 .top-title a {
   text-decoration: none;
   color: black;
   margin-top: 5px;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .top-title img {
@@ -54,15 +70,41 @@ div
   margin-right: 2px;
 }
 
-.welcome {
+.top-buttons {
+  background: none;
+  border: none;
   float: right;
   font-family: 'Oswald';
-  line-height: 50px;
+  font-size: 20px;
   font-weight: 500;
+  line-height: 45px;
+  vertical-align: middle;
+}
+
+.top-timers {
+  text-align: center;
+  font-size: 14px;
+}
+
+@keyframes pulse_animation {
+    0% { 
+        opacity: 1.0;
+    }
+    50% { 
+        opacity: 0.6;
+    }
+    100% { 
+        opacity: 1.0;
+    }
+}
+
+.pulse {
+	animation: pulse_animation 1.5s ease-out;
+	animation-iteration-count: infinite;
 }
 
 .topSpacer {
-  height: 70px;
+  height: 80px;
   position: relative;
 }
 
