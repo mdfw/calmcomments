@@ -16,21 +16,32 @@ div
 	/* For testing only */
 }
 
-.content
-{
-	max-width: 970px;
+.content {
 	margin: 0 auto;
+	max-width: 970px;
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
-.top-navigation
-{
+.top-navigation {
 	background-color: #2DB3FF;
 	position: fixed;
 	top: 0;
 	right: 0;
 	left: 0;
-	z-index: 9999;
-	height: 50px;
+	height: 70px;
+	padding-top: 5px;
+}
+
+.top-nav-overlay {
+  background-image: url(https://www.transparenttextures.com/patterns/twinkle-twinkle.png);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  height: 70px;
+  padding-top: 5px;
 }
 
 .top-title {
@@ -38,18 +49,69 @@ div
   font-family: 'Oswald';
   font-size: 25px;
   font-weight: 500;
+  margin-bottom: -10px;
+  padding-left: 15px;
+  padding-right: 15px;
   width: 100%;
 }
 
-.welcome {
+.top-title a {
+  color: black;
+  cursor: pointer;
+  margin-top: 5px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+#top-title-right {
+  color: black;
+  float: right;
+  font-size: 20px;
+  margin-top: 10px;
+  vertical-align: middle;
+}
+
+.top-title img {
+  margin-left: 5px;
+  margin-right: 2px;
+}
+
+.top-buttons {
+  background: none;
+  border: none;
   float: right;
   font-family: 'Oswald';
-  line-height: 50px;
+  font-size: 20px;
   font-weight: 500;
+  line-height: 45px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.top-timers {
+  text-align: center;
+  font-size: 14px;
+}
+
+@keyframes pulse_animation {
+    0% { 
+        opacity: 1.0;
+    }
+    50% { 
+        opacity: 0.6;
+    }
+    100% { 
+        opacity: 1.0;
+    }
+}
+
+.pulse {
+	animation: pulse_animation 1.5s ease-out;
+	animation-iteration-count: infinite;
 }
 
 .topSpacer {
-  height: 70px;
+  height: 80px;
   position: relative;
 }
 
@@ -63,6 +125,51 @@ div
   text-decoration: none;
 }
 
+#welcome-area {
+  background-color: #1078b2;
+  border-color: lightGray;
+  border-width: 1px;
+  border-radius: 10px;
+  border-style: solid;
+  color: #f9fdff;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+#welcome-area-title {
+  font-weight: bold;
+}
+
+#welcome-area-text a {
+  color: #f9fdff;
+}
+
+#welcome-introverts {
+  color: #abe1ff;
+  text-shadow: 1px 1px 5px #463737;
+}
+
+#welcome-extroverts {
+  color: #ff7474;
+  text-shadow: 1px 1px 5px #332324;
+}
+
+#welcome-area-signup {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#welcome-signup-button {
+  animation: pulse_animation 8s ease-out;
+  animation-iteration-count: infinite;
+  background: none;
+  border: none;
+  color: white;
+  font-family: 'Oswald';
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .marketingTextLarge {
   font-size: 2em;
 }
@@ -74,31 +181,47 @@ div
 .marketingSpacing {
   margin-top: 20px;
 }
+
 .newPost {
   position: relative;
 }
+
 .board {
   max-width: 800px;
    margin-left: auto ;
   margin-right: auto ;
 }
-.newPost {
-  
-}
+
 .post {
   margin-top: 10px;
   max-width: 800px;
 }
+
 .post-content {
   margin-left: 5px;
 }
-.post p {
-}
+
 .post-account {
   font-weight: bold;
   font-size: 14px;
   font-family: 'Open Sans';
 }
+
 .post-content {
   color: black;
+}
+
+.login-form-demos {
+  color: grey;
+}
+
+.login-form-demos h4 {
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+
+.login-form-demos button {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
