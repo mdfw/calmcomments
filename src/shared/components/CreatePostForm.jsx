@@ -4,7 +4,6 @@ import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextareaAutosize from 'react-autosize-textarea';
-import { NowTimer, ReleaseTimer } from '../containers/Timers';
 
 /* SubmitProgress shows a spinner while we wait for account creation.
   */
@@ -163,10 +162,6 @@ class CreatePostForm extends React.Component { // eslint-disable-line react/no-m
                 disabled={submitting || !errors.formReady}
                 type="submit"
               />
-            </div>
-            <div style={{ float: 'left', fontSize: '12px', marginTop: '13px' }}>
-              <NowTimer /><br />
-              <ReleaseTimer />
             </div>
           </div>
         </form>

@@ -94,7 +94,7 @@ class RegisterForm extends React.Component { // eslint-disable-line react/no-mul
       <div>
         <form onSubmit={this.onSubmit}>
           <div className="text-header">
-            Sign up for Calm Comments
+            Sign up
           </div>
           <div>
             <Link to="/login" className="loginHints">or Log in</Link>

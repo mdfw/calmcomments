@@ -6,7 +6,7 @@ import { TimersDisplay } from '../containers/Timers';
 
 const HeaderLogin = () => (
   <Link to="/login">
-    <button className="top-buttons" name="login">login</button>
+    <button className="top-buttons" name="login">Login</button>
   </Link>
 );
 

@@ -1,30 +1,27 @@
 import React from 'react';
-import { NowTimer, ReleaseTimer } from '../containers/Timers';
+import { Link } from 'react-router';
 
+/* eslint-disable max-len */
 function WelcomeForm() {
-  const welcomePostPaperStyle = {
-    padding: '15px',
-    marginBottom: '15px',
-    borderColor: 'lightGray',
-    borderWidth: '1px',
-    borderRadius: '10px',
-    borderStyle: 'solid',
-  };
-
   return (
-    <div style={welcomePostPaperStyle}>
-      Welcome to Calm Comments.<br />
-      Comments can be posted at any time (after you log in).
-      However, new posts are only distributed every 5 minutes.
-      This allows those of different temperaments to participate.
-      <div style={{ fontSize: '12px', marginTop: '13px' }}>
-        <NowTimer />
-        <span> | </span>
-        <ReleaseTimer />
+    <div id="welcome-area">
+      <div id="welcome-area-title">Welcome to Calm Comments</div>
+      <div id="welcome-area-text">
+      People are different and process conversations in different ways. <span id="welcome-introverts">Introverts</span> (generally) need time to think. <span id="welcome-extroverts">Extroverts</span> (again, generally) dive right in. Calm comments can help bridge that gap. Here is how:
+      <ol>
+        <li>Comments can be posted at any time (after you log in).</li>
+        <li>New posts are only distributed every 5 minutes.</li>
+      </ol>
+      Everyone wins! A nice calm conversation. Try it yourself - <Link to="/login">there&apos;s a free demo</Link>.
       </div>
-
+      <div id="welcome-area-signup">
+        <Link to="/signup">
+          <button id="welcome-signup-button" name="button">Sign up</button>
+        </Link>
+      </div>
     </div>
   );
 }
+/* eslint-enable max-len */
 
 export default WelcomeForm;

@@ -2,16 +2,6 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { logoutAccount } from '../actions/account';
 
-const headerRightStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  height: '50px',
-};
-
-const buttonTextStyle = {
-  marginRight: '15px',
-};
-
 class HeaderLoggedButton extends React.Component {
   constructor(props) {
     super(props);
@@ -53,9 +43,7 @@ class HeaderLoggedButton extends React.Component {
   render() {
     const welcomeText = `Welcome, ${this.props.displayName}`;
     return (
-      <span id="HeaderRight" style={headerRightStyle}>
-        <span style={buttonTextStyle}>{welcomeText}</span>
-      </span>
+      <span id="top-title-right">{welcomeText}</span>
     );
   }
 }

@@ -54,6 +54,7 @@ class LoginForm extends React.Component { // eslint-disable-line react/no-multi-
     this.onSubmit = this.onSubmit.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onFocus = this.onFocus.bind(this);
+    this.setDemo = this.setDemo.bind(this);
   }
   onChange(e) {
     const target = e.target;
@@ -75,6 +76,12 @@ class LoginForm extends React.Component { // eslint-disable-line react/no-multi-
     const name = e.target.name;
     this.props.handleFocus(name);
   }
+  setDemo(account, pass) {
+    this.props.handleChange({
+      email: account,
+      password: pass,
+    });
+  }
   render() {
     const {
       loggingIn,
@@ -87,16 +94,28 @@ class LoginForm extends React.Component { // eslint-disable-line react/no-multi-
     if (this.props.errors.loginError) {
       errorInfo = <LoginError errorMessage={this.props.errors.loginError} />;
     }
+    const setDemo = this.setDemo;
+    const useDemo1 = function useDemo1() {
+      setDemo('hire@mdfw.me', 'Call-408-598-1325');
+    };
+    const useDemo2 = function useDemo2() {
+      setDemo('contratar@mdfw.me', 'Call-408-598-1325');
+    };
     return (
       <div>
         <form onSubmit={this.onSubmit}>
           <div className="text-header">
-            Log in to Calm Comments
+            Login
           </div>
           <div>
             <Link to="/signup" className="loginHints">or Sign up</Link>
           </div>
           {errorInfo}
+          <div className="login-form-demos">
+            <h4>Demo accounts:</h4>
+            <button onClick={useDemo1}>• hire@mdfw.me | <i>Call-408-598-1325</i> •</button><br />
+            <button onClick={useDemo2}>• contratar@mdfw.me | <i>Call-408-598-1325</i> •</button>
+          </div>
           <div>
             <TextField
               name="email"
